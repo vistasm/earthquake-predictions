@@ -1,0 +1,92 @@
+{
+  "model_version": "V200_Global_Production",
+  "training_date": "2026-01-23 18:48:46.000504",
+  "calibration_period": {
+    "start": "2018-01-01",
+    "end": "2026-01-22"
+  },
+  "tiers": {
+    "T1_micro": {
+      "name": "T1_micro",
+      "magnitude": 2.5,
+      "window_days": 2,
+      "temperature": 0.5,
+      "n_samples": 1648080,
+      "n_positives": 192294,
+      "thresholds": {
+        "0.5": 0.9789112075336587,
+        "1.0": 0.9624608429079182,
+        "2.0": 0.9372861275700137,
+        "5.0": 0.8711697379326443,
+        "10.0": 0.7698237490709181
+      },
+      "calibration_metrics": {
+        "auc": 0.8870365818577318,
+        "pr_auc": 0.6262180980074467
+      }
+    },
+    "T2_felt": {
+      "name": "T2_felt",
+      "magnitude": 4.5,
+      "window_days": 2,
+      "temperature": 0.6500000000000001,
+      "n_samples": 1648080,
+      "n_positives": 76370,
+      "thresholds": {
+        "0.5": 0.8950691672787867,
+        "1.0": 0.8806429107471052,
+        "2.0": 0.8543834530826993,
+        "5.0": 0.7885750813384292,
+        "10.0": 0.7216788949129236
+      },
+      "calibration_metrics": {
+        "auc": 0.8699244015649902,
+        "pr_auc": 0.3329818206080989
+      }
+    },
+    "T3_minor": {
+      "name": "T3_minor",
+      "magnitude": 5.5,
+      "window_days": 3,
+      "temperature": 0.5,
+      "n_samples": 1648080,
+      "n_positives": 9009,
+      "thresholds": {
+        "0.5": 0.86495176507093,
+        "1.0": 0.8420320562832924,
+        "2.0": 0.8124023751817777,
+        "5.0": 0.7291920806220945,
+        "10.0": 0.6373874231554764
+      },
+      "calibration_metrics": {
+        "auc": 0.8588646957506514,
+        "pr_auc": 0.04622484140231163
+      }
+    },
+    "T4_damage": {
+      "name": "T4_damage",
+      "magnitude": 6.0,
+      "window_days": 3,
+      "temperature": 0.5,
+      "n_samples": 1648080,
+      "n_positives": 2859,
+      "thresholds": {
+        "0.5": 0.8295538035345774,
+        "1.0": 0.8133006570351524,
+        "2.0": 0.7750808647140957,
+        "5.0": 0.6997554493780066,
+        "10.0": 0.6043727858184463
+      },
+      "calibration_metrics": {
+        "auc": 0.8818442166702247,
+        "pr_auc": 0.016152512587250666
+      }
+    }
+  },
+  "_usage_instructions": {
+    "per_tier_calibration": "IMPORTANT: Each tier has its own temperature. When using model(return_all_tiers=True), apply calibration as: probs = sigmoid(logits / tier['temperature'])",
+    "single_tier_t4": "For T4-only predictions, use model(return_all_tiers=False) which applies T4 temperature internally.",
+    "threshold_key_format": "THRESHOLD KEYS: Stored as strings in JSON ('0.5', '1.0', ...). Convert to floats on load: thresholds = {float(k): v for k, v in tier['thresholds'].items()}. GitHub publisher adds 'pct' suffix: '0.5pct', '1.0pct', etc.",
+    "example_code": "raw_logits = model(x_local, x_global, x_tier, zone_idx, return_all_tiers=True); for tier_name, tier_data in calibration['tiers'].items():     temp = tier_data['temperature'];     probs = torch.sigmoid(raw_logits[f'tier_{idx}'] / temp)"
+  }
+}

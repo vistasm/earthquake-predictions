@@ -1,0 +1,27 @@
+{
+  "model_name": "V200_Global_Production",
+  "model_version": "1.0.0",
+  "training_date": "2026-01-23",
+  "training_data_end": "2026-01-21",
+  "calibration_period": {
+    "start": "2018-01-01",
+    "end": "2026-01-22"
+  },
+  "architecture": {
+    "type": "Multi-task LSTM with attention",
+    "n_zones": 560,
+    "n_tiers": 4
+  },
+  "tiers": {
+    "T1_micro": {"magnitude": 2.5, "window_days": 2},
+    "T2_felt": {"magnitude": 4.5, "window_days": 2},
+    "T3_minor": {"magnitude": 5.5, "window_days": 3},
+    "T4_damage": {"magnitude": 6.0, "window_days": 3}
+  },
+  "performance": {
+    "T1_micro": {"roc_auc": 0.8870, "pr_auc": 0.6262},
+    "T2_felt": {"roc_auc": 0.8699, "pr_auc": 0.3330},
+    "T3_minor": {"roc_auc": 0.8589, "pr_auc": 0.0462},
+    "T4_damage": {"roc_auc": 0.8818, "pr_auc": 0.0162}
+  }
+}
